@@ -8,7 +8,7 @@ def w(a, b, c):
     if a > 20 or b > 20 or c > 20:
         return w(20, 20, 20)
 
-    if w_dp[a][b][c] != 0:
+    if w_dp[a][b][c]:
         return w_dp[a][b][c]
 
     if a < b < c:
