@@ -1,7 +1,6 @@
 n, m = map(int, input().split(' '))
 
 checked_list = [0] * n
-used_list = [0] * n
 num_arr = []
 
 
