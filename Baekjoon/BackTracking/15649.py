@@ -1,6 +1,3 @@
-from tabnanny import check
-
-
 n, m = map(int, input().split(' '))
 
 checked_list = [0] * n
