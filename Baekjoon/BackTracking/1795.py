@@ -9,9 +9,8 @@ consonant_set = set(list(x for x in c_arr if x not in vowel_set))
 
 
 def dfs(index):
-    if index == l:
-        if len(set(password) & vowel_set) >= 1 and len(set(password) & consonant_set) >= 2:
-            print(*password, sep='')
+    if index == l and len(set(password) & vowel_set) >= 1 and len(set(password) & consonant_set) >= 2:
+        print(*password, sep='')
 
     for i in range(c):
         if index > 0 and c_arr.index(password[index - 1]) > c_arr.index(c_arr[i]):
