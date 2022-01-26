@@ -1,61 +1,30 @@
-n = int(input())
-s_arr = []
+from itertools import combinations as com
 
-for i in range(n):
-    s_arr.append(list(map(int, input().split(' '))))
+n_len = int(input())
+s_list = []
+n_list = []
+min_result = 10000000
 
-team_arr = []
-team = []
-checked_list = [0] * n
-min_result = 10000
+for i in range(n_len):
+    n_list.append(i)
+    s_list.append(list(map(int, input().split(' '))))
 
+team1_list = list(com(n_list, n_len//2))
 
-def dfs(index):
-    global team_arr
-    global team
+for i in range(len(team1_list)):
+    t1 = 0
+    t2 = 0
+    team2_set = set(n_list) - set(team1_list[i])
 
-    if index == n and team_arr[0] == 1:
-        team.append(team_arr[:])
-        return
+    team1 = list(com(team1_list[i], 2))
+    team2 = list(com(team2_set, 2))
 
-    for i in range(n):
-        if 1 <= index < n/2 and team_arr[index-1] >= i+1:
-            continue
-        if index > n/2 and team_arr[index-1] >= i+1:
-            continue
+    for j in range(len(team1)):
+        t1 += s_list[team1[j][0]][team1[j][1]] + \
+            s_list[team1[j][1]][team1[j][0]]
+        t2 += s_list[team2[j][0]][team2[j][1]] + \
+            s_list[team2[j][1]][team2[j][0]]
 
-        if checked_list[i] == 0:
-            checked_list[i] = 1
-            team_arr.append(i+1)
-            dfs(index + 1)
-            checked_list[i] = 0
-            team_arr.pop()
+    min_result = min(min_result, abs(t2 - t1))
 
-
-dfs(0)
-
-for i in range(len(team)):
-    t = team[i]
-    print(t)
-    sum_1 = 0
-    for j in range(n//2):
-        # 앞의 팀
-        person = t[j]
-        for k in t:
-            sum_1 += s_arr[person-1][k-1]
-    print(sum_1)
-
-    sum_2 = 0
-    for j in range(n//2):
-        person = t[n//2+j]
-        for k in t:
-            sum_2 += s_arr[person-1][k-1]
-    print(sum_2)
-
-    print(sum_1 - sum_2)
-    min_result = min(min_result, abs(sum_1 - sum_2))
-    print(min_result)
-
-
-print(team)
 print(min_result)
