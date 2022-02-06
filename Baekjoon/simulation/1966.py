@@ -1,6 +1,3 @@
-from queue import PriorityQueue
-
-
 test_num = int(input())  # 테스트케이스의 개수
 
 for _ in range(test_num):
