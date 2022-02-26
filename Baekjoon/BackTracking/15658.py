@@ -1,45 +1,45 @@
-from itertools import permutations as per
-from itertools import combinations as com
 import sys
+input = sys.stdin.readline
 
-
-n = int(sys.stdin.readline())
-n_list = list(map(int, sys.stdin.readline().split(' ')))
-operator_input_list = list(map(int, sys.stdin.readline().split(' ')))
-
-operator_list = []
-
-for i in range(4):
-    if operator_input_list[i] > 0:
-        for _ in range(operator_input_list[i]):
-            operator_list.append(i)
-
-com_n_list = list(com(n_list, n))
-per_o_list = list(per(operator_list, n-1))
-print(per_o_list)
+n = int(input())
+n_list = list(map(int, input().split(' ')))
+operator_list = list(map(int, input().split(' ')))
 
 max = float('-inf')
 min = float('inf')
+answer = n_list[0]
 
-for cn in com_n_list:
-    for po in per_o_list:
-        temp = cn[0]
-        for i in range(n-1):
-            if po[i] == 0:
-                temp += cn[i+1]
-            elif po[i] == 1:
-                temp -= cn[i+1]
-            elif po[i] == 2:
-                temp *= cn[i+1]
-            elif po[i] == 3:
-                if temp < 0:
-                    temp = -(abs(temp) // cn[i+1])
+def dfs(index):
+    global answer
+    global max, min
+
+    if index == n-1:
+        if answer > max:
+            max = answer
+        if answer < min:
+            min = answer
+        return
+
+    for i in range(4):
+        if operator_list[i] > 0:
+            operator_list[i] -= 1
+            temp = answer
+            if i == 0:
+                answer += n_list[index + 1]
+            elif i == 1:
+                answer -= n_list[index + 1]
+            elif i == 2:
+                answer *= n_list[index + 1]
+            elif i == 3:
+                if answer < 0:
+                    answer = -(-answer // n_list[index + 1])
                 else:
-                    temp //= cn[i+1]
-        if temp > max:
-            max = temp
-        if temp < min:
-            min = temp
+                    answer //= n_list[index + 1]
+            dfs(index + 1)
+            operator_list[i] += 1
+            answer = temp
+
+dfs(0)
 
 print(max)
 print(min)
