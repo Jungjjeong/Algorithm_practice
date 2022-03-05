@@ -1,49 +1,45 @@
+from collections import deque
+import sys
+input = lambda: sys.stdin.readline()
+
+def bfs(i, c):
+	q = deque()
+	q.append(i)
+	visit[i] = True
+	color[i] = c
+
+	while q:
+		i = q.popleft()
+		for g in graph[i]:
+			if not visit[g]:
+				visit[g] = True
+				q.append(g)
+				color[g] = 3- color[i]
+			else:
+				if color[i] == color[g]:
+					return False
+	return True
+
+
 k = int(input())
 
-def dfs(index):
-	for g in graph[index]:
-		if visit[g] == 0:
-			visit[g] = 1
-
-			if color[g] == color[index]:
-				print(g, index)
-				print(color)
-				return False
-
-			if color[index] == -1:
-				color[g] = 1
-			elif color[index] == 1:
-				color[g] = -1
-
-			if dfs(g) == False:
-				return False
-			
-			visit[g] = 0
-
-
-
-
-for _ in range(k):
-	v, e = map(int, input().split(' '))
-
-	graph = [[] for _ in range(v+1)]
-	visit = [0] * (v+1)
+for _ in range(k): 
+	v,e = map(int, input().split())
 	color = [0] * (v+1)
+	graph = [[] for _ in range(v+1)]
 
 	for _ in range(e):
-		a,b = map(int, input().split(' '))
+		a,b = map(int, input().split())
 		graph[a].append(b)
 		graph[b].append(a)
-
-	print(graph)
+	
+	answer = True
+	visit = [False] * (v+1)
 
 	for i in range(1, v+1):
-		if color[i] == 0:
-			print(i)
-			visit[i] = 1
-			color[i] = -1
-			if dfs(i) == False:
-				print('NO')
-				quit(0)
+		if not visit[i]:
+			if not bfs(i, 1):
+				answer = False
+				break
 
-	print('Yes')
+	print('YES' if answer else 'NO')
