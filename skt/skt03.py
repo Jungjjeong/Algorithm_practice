@@ -25,16 +25,14 @@ def solution(width, height, diagonals):
 
 			for d in diagonals:
 				if y == height - d[1] and x == d[0] - 1:
-					print('들어옴')
 					ny = y + dy[4]
 					nx = x + dx[4]
 				elif y == height - d[1] + 1 and x == d[0]:
-					print('들어옴2')
 					ny = y + dy[5]
 					nx = x + dx[5]
 				else:
 					break
-				
+
 				if c == 0 and field[ny][nx][1] == 0:
 					print('--',ny, nx)
 					if 0 <= ny < (height + 1) and 0 <= nx < (width + 1):

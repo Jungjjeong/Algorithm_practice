@@ -18,7 +18,6 @@ def solution(money, costs):
 		for i in range(m[0], money + 1):
 			if i - m[0] >= 0:
 				dp[i] += dp[i-m[0]]
-	print(dp)
 
 	return answer
 
