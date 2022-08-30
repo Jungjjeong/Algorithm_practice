@@ -6,8 +6,8 @@ function solution(board, skill) {
     new Array(col + 1).fill(0)
   );
 
-  for (let i = 0; i < skill.length; i += 1) {
-    const [type, r1, c1, r2, c2, degree] = skill[i];
+  for (const s of skill) {
+    const [type, r1, c1, r2, c2, degree] = s;
 
     imosArr[r1][c1] += type === 1 ? -degree : degree;
     imosArr[r1][c2 + 1] += type === 1 ? degree : -degree;
